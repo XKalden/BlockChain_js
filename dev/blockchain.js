@@ -1,6 +1,10 @@
 // Crypto Hash Algorithm
 const sha256 = require('sha256');
 
+// connecting LocalHost to BlockChain
+const currentNodeUrl = process.argv[3];
+
+
 
 
 // Constructor for all Blocks
@@ -10,6 +14,11 @@ function Blockchain(){
 
     // Genesis Block
     this.createNewBlock(100, '0', '0');
+
+    // Current Network
+    this.currentNodeUrl = currentNodeUrl;
+    this.networkNodes = [];
+     
 }   
 
 // Creating block prototype
