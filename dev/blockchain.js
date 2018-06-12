@@ -3,8 +3,7 @@ const sha256 = require('sha256');
 
 // connecting LocalHost to BlockChain
 const currentNodeUrl = process.argv[3];
-
-
+const uuid = require('uuid/v1');
 
 
 // Constructor for all Blocks
@@ -18,7 +17,7 @@ function Blockchain(){
     // Current Network
     this.currentNodeUrl = currentNodeUrl;
     this.networkNodes = [];
-     
+
 }   
 
 // Creating block prototype
@@ -48,12 +47,23 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipient){
     const newTransaction = {
         amount,
         sender,
-        recipient
-    }
-    this.pendingTransactions.push(newTransaction);
+        recipient,
+        transactionId: uuid().split('-').join('')
+    };
 
+    return newTransaction;
+
+    // this.pendingTransactions.push(newTransaction);
+
+    // return this.getLastBlock()['index'] + 1;
+};
+
+// Add Transaction to pendingTransaction
+Blockchain.prototype.addTransactionToPendingTransactions = function(transactionObj){
+    this.pendingTransactions.push(transactionObj);
     return this.getLastBlock()['index'] + 1;
-}
+
+} 
 
 // convert Block to Hash values 
 Blockchain.prototype.hashBlock = function(previousBlockHash, currentBlockData, nonce){
